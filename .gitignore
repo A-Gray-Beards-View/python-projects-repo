@@ -1,3 +1,25 @@
+# Ignore other files in this folder
+.vscode/*
+
+# These files are specific to each project and should be included in the repository
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
+
+# Information that is not safe in the repository
+app_keys.json
+keys.json
+passwords.json
+key_files/*
+
+# Subfolders that could be created in different sub-projects and subfolders that should be excluded
+**/dumps/
+**/logs/
+**/tmp/
+
+## Default Python Entries from GitHub Desktop
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

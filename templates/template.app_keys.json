@@ -1,0 +1,29 @@
+{
+    "_commentDocumentation" : {
+        "_commentREADME": "The file README_Configuration.md has additional document for how the configuration process works.",
+        "_commentUsage": "Add your passwords then rename this file to app_keys.json"
+    },
+    "pgConnStrs": {
+        "localdev": {
+            "database_one": {
+                "password": ""
+            },
+            "database_two": {
+                "password": ""
+            }
+        },
+        "localhost": {
+            "database_one": {
+                "password": ""
+            },
+            "database_two": {
+                "password": ""
+            }
+        },
+        "production": {
+            "database_one": {
+                "password": ""
+            }
+        }
+    }
+}

@@ -1,0 +1,66 @@
+{
+    "_commentDocumentation": {
+        "_comment": "A leading underscore will represent comments in the JSON but will be removed at runtime.",
+        "_commentNamingConvention": "Names using snake_case match object names in the code or Postgres.",
+        "_commentREADME": "The file README_Configuration.md has additional document for how the configuration process works."
+    },
+    "GCPCredentials": {
+        "_comment": "The property holding the project ID and keyfile_path is the friendly project name",
+        "Your Friendly GCP Project Name" : {
+            "project_id": "your-project-id",
+            "_comment": "The keyfile_path is a subfolder off the root of the repo and the file is not in the Git repo",
+            "keyfile_path": "key_files/your-project-id-service.json"
+        }
+    },
+    "pgConnStrs": {
+        "_comment": "The passwords will be merged from app_keys.json",
+        "_comment_dbname": "For psycopg2, the 'dbname' propery is the database name",
+        "_comment_database": "For asyncpg, sqlalchemy, the 'database' property is the database name",
+        "localdev":{
+            "database_one" : {
+                "dbname": "uspto_patents",
+                "database": "uspto_patents",
+                "user": "postgres",
+                "password": "",
+                "host": "127.0.0.1",
+                "port": "5432"
+            },
+            "database_two" : {
+                "dbname": "uspto_oaw_archives",
+                "database": "uspto_oaw_archives",
+                "user": "postgres",
+                "password": "",
+                "host": "127.0.0.1",
+                "port": "5432"
+            }
+        },
+        "localhost":{
+            "database_one" : {
+                "dbname": "uspto_patents",
+                "database": "uspto_patents",
+                "user": "postgres",
+                "password": "",
+                "host": "localhost",
+                "port": "5432"
+            },
+            "database_two" : {
+                "dbname": "uspto_oaw_archives",
+                "database": "uspto_oaw_archives",
+                "user": "postgres",
+                "password": "",
+                "host": "localhost",
+                "port": "5432"
+            }
+        },
+        "production":{
+            "database_one" : {
+                "dbname": "uspto_patents",
+                "database": "uspto_patents",
+                "user": "service_account",
+                "password": "",
+                "host": "127.0.0.1",
+                "port": "5432"
+            }
+        }
+    }
+}
