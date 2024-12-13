@@ -14,52 +14,56 @@
     },
     "pgConnStrs": {
         "_comment": "The passwords will be merged from app_keys.json",
-        "_comment_dbname": "For psycopg2, the 'dbname' propery is the database name",
-        "_comment_database": "For asyncpg, sqlalchemy, the 'database' property is the database name",
-        "localdev":{
+        "_comment_dbname": "For psycopg2, the 'dbname' propery is the database name which is a PostgreSQL standard",
+        "_comment_database": "For asyncpg, sqlalchemy, the 'database' property is the database name, which is common for other database technologies",
+        "development":{
             "database_one" : {
-                "dbname": "uspto_patents",
-                "database": "uspto_patents",
+                "dbname": "postgres",
+                "database": "postgres",
                 "user": "postgres",
                 "password": "",
                 "host": "127.0.0.1",
-                "port": "5432"
-            },
-            "database_two" : {
-                "dbname": "uspto_oaw_archives",
-                "database": "uspto_oaw_archives",
-                "user": "postgres",
-                "password": "",
-                "host": "127.0.0.1",
-                "port": "5432"
+                "port": "5433"
             }
         },
         "localhost":{
             "database_one" : {
-                "dbname": "uspto_patents",
-                "database": "uspto_patents",
+                "dbname": "postgres",
+                "database": "postgres",
                 "user": "postgres",
                 "password": "",
                 "host": "localhost",
-                "port": "5432"
-            },
-            "database_two" : {
-                "dbname": "uspto_oaw_archives",
-                "database": "uspto_oaw_archives",
+                "port": "5433"
+            }
+        },
+        "qa":{
+            "database_one" : {
+                "dbname": "postgres",
+                "database": "postgres",
                 "user": "postgres",
                 "password": "",
-                "host": "localhost",
-                "port": "5432"
+                "host": "127.0.0.1",
+                "port": "5433"
             }
         },
         "production":{
             "database_one" : {
-                "dbname": "uspto_patents",
-                "database": "uspto_patents",
-                "user": "service_account",
+                "dbname": "postgres",
+                "database": "postgres",
+                "user": "postgres",
                 "password": "",
                 "host": "127.0.0.1",
-                "port": "5432"
+                "port": "5433"
+            }
+        },
+        "staging":{
+            "database_one" : {
+                "dbname": "postgres",
+                "database": "postgres",
+                "user": "postgres",
+                "password": "",
+                "host": "127.0.0.1",
+                "port": "5433"
             }
         }
     }

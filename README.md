@@ -15,7 +15,7 @@
  7. All Python files can be run in the sub-folder they are located using "Play" button in the Visual Studio Code editor
 
 ## Documentation
- 
+
 ### Naming Conventions
 
  Naming conventions in this project will follow standards used by most Python users. More specific conventions based on the author's decades of experience will be added and explained as required. With code, there are three important things to understand
@@ -32,3 +32,21 @@
 * JSON configuration files will have two conventions. Properties that map directly to a Python variable will use snake_case for the name. Properties that do not map directly to a Python variable will use JSON camelCase
 * Classes that have all static methods will have a suffix like "Helper", or "Tools"
 * Classes that are a singleton will have the suffix Singleton
+
+## Using the Project
+
+In order to run the code the virtual environments and specific configuration items need to be set. There are two scripts that will assist with that test. One is a shell script for MacOS, while the other is a Powershell script for Windows.
+
+### Setup Python Project Workspace
+
+To begin executing scripts:
+1. Duplicate the file [REPO-NAME].code-workspace and replace [REPO-NAME] with the name of your repository for the file-name
+2. Open the file you created and renamed
+3. Find and replace the [REPO-NAME] entries in the file with your repository name
+
+### Initialize the Projects
+
+1. Set permissions for the script using on MacOS (once)
+  chmod +x {path to the repository root}/python-projects-repo/setup_python_project.sh
+2. Using the Menu select
+  Terminal | Run Task | setup_python_projects.sh
