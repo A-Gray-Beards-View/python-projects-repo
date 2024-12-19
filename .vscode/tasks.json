@@ -8,6 +8,33 @@
             "problemMatcher": []
         },
         {
+            "label": "Setup Python Sub-Project",
+            "type": "shell",
+            "command": "echo",
+            "args": [
+                "Setting up Python Subproject..."
+            ],
+            "windows": {
+                "command": ".\\shell_scripts\\Add-Sub-Project.ps1",
+                "type": "shell"
+            },
+            "linux": {
+                "command": "./shell_scripts/add_sup_project.sh",
+                "type": "shell"
+            },
+            "osx": {
+                "command": "./shell_scripts/add_sup_project.sh",
+                "type": "shell"
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            }
+        },
+        {
             "label": "Setup Python Projects",
             "type": "shell",
             "command": "echo",
