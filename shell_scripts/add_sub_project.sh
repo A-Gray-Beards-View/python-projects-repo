@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e  # Exit immediately if a command exits with a non-zero status
+
 # Determine the directory of the current script
 script_dir="$(dirname "${BASH_SOURCE[0]}")"
 

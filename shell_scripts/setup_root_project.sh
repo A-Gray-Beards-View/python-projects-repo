@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e  # Exit immediately if a command exits with a non-zero status
+
 # Determine the directory of the current script
 script_dir="$(dirname "${BASH_SOURCE[0]}")"
 
@@ -36,7 +38,7 @@ create_root_project_workspace() {
 
 create_root_project_workspace "$repo_root" "$repo_name" "$repo_name_upper"
 
-create_venv "$repo_root/.venv"
+setup_python_environment "$repo_root" "true"
 
 # Install the default packages
 pip install -r "$repo_root/requirements.txt"
