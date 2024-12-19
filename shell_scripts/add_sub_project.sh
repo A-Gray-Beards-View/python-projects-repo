@@ -83,27 +83,27 @@ fi
 # Create the subproject .vscode folder if it doesn't exist
 if [ ! -d "$repo_root/$subfolder_name/.vscode" ]; then
     mkdir "$repo_root/$subfolder_name/.vscode"
-
-    # Copy the launch.json file to the .vscode folder
-    copy_template_if_not_exists "$repo_root/templates/launch.json" "$repo_root/$subfolder_name/.vscode/launch.json"
-
-    # Find and replace [REPO-NAME] with the actual repository name
-    find_and_replace "\[REPO-NAME\]" "$repo_name" "$repo_root/$subfolder_name/.vscode/launch.json"
-
-    # Copy the settings.json file to the .vscode folder
-    copy_template_if_not_exists "$repo_root/templates/settings.json" "$repo_root/$subfolder_name/.vscode/settings.json"
-
-    # Copy the tasks.json file to the .vscode folder
-    copy_template_if_not_exists "$repo_root/templates/tasks.json" "$repo_root/$subfolder_name/.vscode/tasks.json"
 fi
+
+# Copy the launch.json file to the .vscode folder
+copy_template_if_not_exists "$repo_root/templates/launch.json" "$repo_root/$subfolder_name/.vscode/launch.json"
+
+# Find and replace [REPO-NAME] with the actual repository name
+find_and_replace "\[REPO-NAME\]" "$repo_name" "$repo_root/$subfolder_name/.vscode/launch.json"
+
+# Copy the settings.json file to the .vscode folder
+copy_template_if_not_exists "$repo_root/templates/settings.json" "$repo_root/$subfolder_name/.vscode/settings.json"
+
+# Copy the tasks.json file to the .vscode folder
+copy_template_if_not_exists "$repo_root/templates/tasks.json" "$repo_root/$subfolder_name/.vscode/tasks.json"
 
 # Create the subproject workspace_packages folder if it doesn't exist
 if [ ! -d "$repo_root/$subfolder_name/workspace_packages" ]; then
     mkdir "$repo_root/$subfolder_name/workspace_packages"
-
-    # Copy the setup.py file to the workspace_packages folder
-    copy_template_if_not_exists "$repo_root/templates/setup.py" "$repo_root/$subfolder_name/workspace_packages/setup.py"
-
-    # Copy the setup.cfg file to the workspace_packages folder
-    copy_template_if_not_exists "$repo_root/templates/setup.cfg" "$repo_root/$subfolder_name/workspace_packages/setup.cfg"
 fi
+
+# Copy the setup.py file to the workspace_packages folder
+copy_template_if_not_exists "$repo_root/templates/setup.py" "$repo_root/$subfolder_name/workspace_packages/setup.py"
+
+# Copy the setup.cfg file to the workspace_packages folder
+copy_template_if_not_exists "$repo_root/templates/setup.cfg" "$repo_root/$subfolder_name/workspace_packages/setup.cfg"

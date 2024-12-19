@@ -19,11 +19,11 @@
                 "type": "shell"
             },
             "linux": {
-                "command": "./shell_scripts/add_sup_project.sh",
+                "command": "./shell_scripts/add_sub_project.sh",
                 "type": "shell"
             },
             "osx": {
-                "command": "./shell_scripts/add_sup_project.sh",
+                "command": "./shell_scripts/add_sub_project.sh",
                 "type": "shell"
             },
             "problemMatcher": [],

@@ -37,6 +37,8 @@
 
 In order to run the code the virtual environments and specific configuration items need to be set. There are two scripts that will assist with that test. One is a shell script for MacOS, while the other is a Powershell script for Windows.
 
+chmod -R u+rwx,g+rwx,o+rwx /Users/tedbouskill/Repos/A-Gray-Beards-View/python-projects-repo
+
 ### Setup Python Project Workspace
 
 To begin executing scripts:
