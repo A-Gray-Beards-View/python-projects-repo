@@ -8,7 +8,7 @@
             "problemMatcher": []
         },
         {
-            "label": "Setup Python Sub-Project",
+            "label": "Add Sub-Project",
             "type": "shell",
             "command": "echo",
             "args": [
@@ -35,11 +35,11 @@
             }
         },
         {
-            "label": "Setup Python Projects",
+            "label": "Setup All Projects",
             "type": "shell",
             "command": "echo",
             "args": [
-                "Setting up Python Projects..."
+                "Setting up Projects..."
             ],
             "windows": {
                 "command": ".\\Setup-Python-Projects.ps1",
