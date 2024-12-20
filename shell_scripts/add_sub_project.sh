@@ -28,7 +28,6 @@ add_folder_to_workspace() {
 
     if [ ! -f "$workspace_file" ]; then
         echo "Workspace file '$workspace_file' not found."
-        return 1
     fi
 
     # Read the workspace file
@@ -37,7 +36,6 @@ add_folder_to_workspace() {
     # Check if the folder already exists
     if echo "$workspace_data" | grep -q "\"path\": \"$subproject_path\""; then
         echo "Folder '$subproject_path' is already in the workspace."
-        return 1
     fi
 
     # Add the new folder entry
@@ -109,3 +107,5 @@ copy_template_if_not_exists "$repo_root/templates/setup.py" "$repo_root/$subfold
 
 # Copy the setup.cfg file to the workspace_packages folder
 copy_template_if_not_exists "$repo_root/templates/setup.cfg" "$repo_root/$subfolder_name/workspace_packages/setup.cfg"
+
+setup_python_environment "$repo_root/$subfolder_name" "false"
