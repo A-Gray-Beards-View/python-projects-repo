@@ -80,6 +80,16 @@ class EnvTools:
             spec.loader.exec_module(module)
             return module
 
+def main():
+    env_tools = EnvTools()
+
+    print(f"Hostname: {env_tools.get_hostname()}")
+    print(f"Repository Root: {env_tools.find_repo_root()}")
+    print(f"Settings: {env_tools.load_settings('config.json')}")
+
+if __name__ == '__main__':
+    main()
+
 #
 # The following method works for the sub-projects like {repo}/{sub-project}
 #
