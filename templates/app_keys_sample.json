@@ -1,0 +1,37 @@
+{
+    "keys": {
+        "_comment": "These are the keys that are used in the application",
+        "APP_NAME": {
+            "KEY1": "",
+            "KEY2": ""
+        }
+    },
+    "pgConnStrs": {
+        "_comment": "These are the passwords merged in app_keys.json",
+        "development":{
+            "postgres" : {
+                "password": ""
+            }
+        },
+        "localhost":{
+            "postbres" : {
+                "password": ""
+            }
+        },
+        "qa":{
+            "postgres" : {
+                "password": ""
+            }
+        },
+        "production":{
+            "postgres" : {
+                "password": ""
+            }
+        },
+        "staging":{
+            "postgres" : {
+                "password": ""
+            }
+        }
+    }
+}
