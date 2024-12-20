@@ -36,10 +36,10 @@ add_folder_to_workspace() {
     # Check if the folder already exists
     if echo "$workspace_data" | grep -q "\"path\": \"$subproject_path\""; then
         echo "Folder '$subproject_path' is already in the workspace."
+    else
+        # Add the new folder entry
+        updated_workspace_data=$(echo "$workspace_data" | jq --arg name "$subproject_name_upper" --arg path "$subproject_path" '.folders += [{"name": $name, "path": $path}]')
     fi
-
-    # Add the new folder entry
-    updated_workspace_data=$(echo "$workspace_data" | jq --arg name "$subproject_name_upper" --arg path "$subproject_path" '.folders += [{"name": $name, "path": $path}]')
 
     # Save the updated workspace file
     echo "$updated_workspace_data" > "$workspace_file"
