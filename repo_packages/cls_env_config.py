@@ -30,12 +30,12 @@ class EnvConfigSingleton:
 
         local_config_file = f'config.{hostname}.json'
         self._local_config = EnvTools.load_settings(local_config_file)
-
-        self._merge_dicts(self._config, self._local_config)
+        if self._local_config is not None:
+            self._merge_dicts(self._config, self._local_config)
 
         self._app_keys = EnvTools.load_settings('app_keys.json')
-
-        self._merge_dicts(self._config, self._app_keys)
+        if self._app_keys is not None:
+            self._merge_dicts(self._config, self._app_keys)
 
         # Optionally load from environment variables
         self._repo_root = EnvTools.find_repo_root()
@@ -67,28 +67,31 @@ class EnvConfigSingleton:
     def set(self, key, value):
         self.merged_config[key] = value
 
-    def api_key(self, key):
-        return self.merged_config['Beta_USPTO_APIs']['keys'][key]
+    def app_key(self, app_key, key):
+        return self.merged_config['keys'][app_key][key]
 
-    def api_keys(self):
-        return self.merged_config['Beta_USPTO_APIs']['keys'].values()
+    def app_keys(self, app_keys):
+        return self.merged_config['keys'][app_keys]
+
+    def all_app_keys(self):
+        return self.merged_config['keys']
 
     def get_source_psycopg2_params(self, database):
-        pgSourceKey = self.merged_config['pgServers']['sourcePostgres']
+        pgSourceKey = self.merged_config['pgServers']['source']
         pgsql_params = self.merged_config['pgConnStrs'][pgSourceKey][database].copy()
         pgsql_params.pop('database', None)  # Remove 'database' key if it exists
         #pgsql_params['password'] = self.merged_config['pgPwds'][pgSourceKey][database]['password']
         return pgsql_params
 
     def get_source_asyncpg_params(self, database):
-        pgSourceKey = self.merged_config['pgServers']['sourcePostgres']
+        pgSourceKey = self.merged_config['pgServers']['source']
         pgsql_params = self.merged_config['pgConnStrs'][pgSourceKey][database].copy()
         pgsql_params.pop('dbname', None)  # Remove 'database' key if it exists
         #pgsql_params['password'] = self.merged_config['pgPwds'][pgSourceKey][database]['password']
         return pgsql_params
 
     def get_target_psycopg2_params_dev(self, database):
-        pgTargetKey = self.merged_config['pgServers']['targetPostgresDev']
+        pgTargetKey = self.merged_config['pgServers']['target']
         if pgTargetKey is None or pgTargetKey == '':
             raise ValueError('No targetPostgresDev key found in config.json')
         pgsql_params = self.merged_config['pgConnStrs'][pgTargetKey][database].copy()
@@ -97,7 +100,7 @@ class EnvConfigSingleton:
         return pgsql_params
 
     def get_target_psycopg2_params_prod(self, database):
-        pgTargetKey = self.merged_config['pgServers']['targetPostgresProd']
+        pgTargetKey = self.merged_config['pgServers']['target']
         pgsql_params = self.merged_config['pgConnStrs'][pgTargetKey][database].copy()
         pgsql_params.pop('database', None)
         #pgsql_params['password'] = self._app_keys['pgPwds'][pgTargetKey][database]['password']
@@ -113,20 +116,18 @@ if __name__ == "__main__":
     # Both variables should reference the same instance
     assert config1 is config2
 
-    print(config1.repo_root)
-    print(config1.workspace_root)
+    print("\nRepository root: ", config1.repo_root)
+    print("Workspace root: ", config1.workspace_root)
 
     # Setting a value in one instance affects the other
     config1.set("NEW_SETTING", "value")
-    print(config2.get("NEW_SETTING"))  # Output: value
+    print("\nNEW_SETTING", config2.get("NEW_SETTING"))  # Output: value
 
-    print(config1.api_key("Litigence"))
-    print(config1.api_keys())
+    if (config1.get("keys") is not None):
+        print("\nAll Keys\n", config1.all_app_keys())
 
-    print(config1.get_source_asyncpg_params("uspto_patents"))
+    print("\nSource asynpg Postgres: ", config1.get_source_asyncpg_params("postgres"))
+    print("Source psycopg2 Postgres: ", config1.get_source_psycopg2_params("postgres"))
+    print("Target psycopg2 Postgres: ", config1.get_target_psycopg2_params_prod("postgres"))
 
-    print(config1.get_source_psycopg2_params("uspto_patents"))
-    #print(config1.get_target_psycopg2_params_dev("uspto_patents"))
-    print(config1.get_target_psycopg2_params_prod("uspto_patents"))
-
-    print(json.dumps(config1.merged_config, indent=2))
+    print("\nFull merged config: ", json.dumps(config1.merged_config, indent=2))

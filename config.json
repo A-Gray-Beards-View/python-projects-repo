@@ -12,12 +12,17 @@
             "keyfile_path": "key_files/your-project-id-service.json"
         }
     },
+    "pgServers": {
+        "source": "development",
+        "target": "development"
+    },
     "pgConnStrs": {
         "_comment": "The passwords will be merged from app_keys.json",
         "_comment_dbname": "For psycopg2, the 'dbname' propery is the database name which is a PostgreSQL standard",
         "_comment_database": "For asyncpg, sqlalchemy, the 'database' property is the database name, which is common for other database technologies",
-        "development":{
-            "database_one" : {
+        "_comment_environment": "The environment is the key for the connection strings",
+        "development": {
+            "postgres" : {
                 "dbname": "postgres",
                 "database": "postgres",
                 "user": "postgres",
@@ -27,7 +32,7 @@
             }
         },
         "localhost":{
-            "database_one" : {
+            "postbres" : {
                 "dbname": "postgres",
                 "database": "postgres",
                 "user": "postgres",
@@ -37,7 +42,7 @@
             }
         },
         "qa":{
-            "database_one" : {
+            "postgres" : {
                 "dbname": "postgres",
                 "database": "postgres",
                 "user": "postgres",
@@ -47,7 +52,7 @@
             }
         },
         "production":{
-            "database_one" : {
+            "postgres" : {
                 "dbname": "postgres",
                 "database": "postgres",
                 "user": "postgres",
@@ -57,7 +62,7 @@
             }
         },
         "staging":{
-            "database_one" : {
+            "postgres" : {
                 "dbname": "postgres",
                 "database": "postgres",
                 "user": "postgres",
