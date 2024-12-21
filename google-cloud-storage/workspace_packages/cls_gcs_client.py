@@ -39,7 +39,7 @@ class GCSClientHelperSingleton:
 def main():
     config = EnvConfig()
 
-    key_file_path = config.get('GCPCredentials')['GoogleCloud']['keyfile_path']
+    key_file_path = config.get('GoogleCloudCredentials')['GoogleCloudStorage']['keyfile_path']
 
     # Append the repo path to the key file path
     key_file_path = f"{config.repo_root}/{key_file_path}"

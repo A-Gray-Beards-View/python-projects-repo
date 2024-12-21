@@ -4,12 +4,17 @@
         "_commentNamingConvention": "Names using snake_case match object names in the code or Postgres.",
         "_commentREADME": "The file README_Configuration.md has additional document for how the configuration process works."
     },
-    "GCPCredentials": {
+    "GoogleCloudCredentials": {
         "_comment": "The property holding the project ID and keyfile_path is the friendly project name",
-        "Your Friendly GCP Project Name" : {
-            "project_id": "your-project-id",
+        "GoogleCloudStorage" : {
+            "project_id": "fourth-scheme-426219-t4",
             "_comment": "The keyfile_path is a subfolder off the root of the repo and the file is not in the Git repo",
-            "keyfile_path": "key_files/your-project-id-service.json"
+            "keyfile_path": "key_files/fourth-scheme-426219-t4-237dcc275551.json"
+        },
+        "GoogleBigQuery" : {
+            "project_id": "fourth-scheme-426219-t4",
+            "_comment": "The keyfile_path is a subfolder off the root of the repo and the file is not in the Git repo",
+            "keyfile_path": "key_files/fourth-scheme-426219-t4-a00a36d11003.json"
         }
     },
     "pgServers": {
