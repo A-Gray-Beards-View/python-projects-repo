@@ -42,15 +42,15 @@
                 "Setting up Projects..."
             ],
             "windows": {
-                "command": ".\\Setup-Python-Projects.ps1",
+                "command": ".\\shell-scripts\\Setup-Python-Projects.ps1",
                 "type": "shell"
             },
             "linux": {
-                "command": "./setup_python_projects.sh",
+                "command": "./shell_scripts/setup_python_projects.sh",
                 "type": "shell"
             },
             "osx": {
-                "command": "./setup_python_projects.sh",
+                "command": "./shell_scripts/setup_python_projects.sh",
                 "type": "shell"
             },
             "problemMatcher": [],
