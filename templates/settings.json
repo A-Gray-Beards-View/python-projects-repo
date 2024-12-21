@@ -1,6 +1,7 @@
 {
     "python.analysis.autoImportCompletions": true,
     "python.analysis.extraPaths": [
+        "${workspaceFolder:[REPO-NAME]}/repo_packages",
         "${workspaceFolder}/workspace_packages"
     ],
     "python.envFile": "${workspaceFolder}/.env",
