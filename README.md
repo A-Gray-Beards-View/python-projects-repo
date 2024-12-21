@@ -37,18 +37,32 @@
 
 In order to run the code the virtual environments and specific configuration items need to be set. There are two scripts that will assist with that test. One is a shell script for MacOS, while the other is a Powershell script for Windows.
 
-chmod -R u+rwx,g+rwx,o+rwx /Users/tedbouskill/Repos/A-Gray-Beards-View/python-projects-repo
+If you run into permission issues on MacOS or Linux, run the following command
+> chmod -R u+rwx,g+rwx,o+rwx {Path to the repository}/python-projects-repo
 
-### Setup Python Project Workspace
+[Project Layout](docs/README_project-layout.md)
 
-To begin executing scripts:
-1. Duplicate the file [REPO-NAME].code-workspace and replace [REPO-NAME] with the name of your repository for the file-name
-2. Open the file you created and renamed
-3. Find and replace the [REPO-NAME] entries in the file with your repository name
+### New Fork of the Repository
 
-### Initialize the Projects
+If you have created a new fork of this repository you need to do the following:
+1. Open up a bash terminal at the root of the repository
+2. Run ./shell_scripts/setup_root_project.sh
 
-1. Set permissions for the script using on MacOS (once)
-  chmod +x {path to the repository root}/python-projects-repo/setup_python_project.sh
-2. Using the Menu select
-  Terminal | Run Task | setup_python_projects.sh
+The script will determine the name of the repository and create a workspace file with the same name and prepare the root project as well as the two default sub-projects google-bigquery and google-cloud-storage
+
+### Clone of Repository on a different system
+
+I've created this project to be used on multiple operating systems. A requirement for a recent project I was working on. Secrets in the app_keys.json file and the key_files folder are not part of the repository by design for security purposes. They need to be manually copied to new computers.
+
+Host specific config files in the format config.[HOST-NAME].json files can be checked in and stay in the repository if they do not contain secrets.
+
+Once the clone is ready, you have to Run Task and select "Setup All Projects" which will run the bash script required on all Mac or LINUX operating systems or the Powershell script on Windows.
+
+### Adding new sub-projects
+
+There is a task added in tasks.json to add sub-projects. You simply Run Task 'Add Sub-Project' then it will prompt for the name of the sub-project which will create the folders, add it to the repository workspace, and initialize the virtual environment.
+
+### Removing sub-projects
+
+1. Delete the sub-project and all it's contents
+2. Remove the sub-project entry from the "folders" section of the repository workspace JSON file
