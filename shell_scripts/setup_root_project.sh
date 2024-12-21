@@ -40,6 +40,6 @@ create_root_project_workspace "$repo_root" "$repo_name" "$repo_name_upper"
 
 setup_python_environment "$repo_root" "true"
 
-# Install the default packages
-pip install -r "$repo_root/requirements.txt"
+setup_python_environment "$repo_root/google-bigquery" "false"
 
+setup_python_environment "$repo_root/google-cloud-storage" "false"

@@ -3,6 +3,14 @@
     {
       "name": "[REPO-NAME]",
       "path": "."
+    },
+    {
+      "name": "GOOGLE-BIGQUERY",
+      "path": "google-bigquery"
+    },
+    {
+      "name": "GOOGLE-CLOUD-STORAGE",
+      "path": "google-cloud-storage"
     }
   ],
   "settings": {
