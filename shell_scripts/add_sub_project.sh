@@ -87,12 +87,13 @@ fi
 
 # Copy the launch.json file to the .vscode folder
 copy_template_if_not_exists "$repo_root/templates/launch.json" "$repo_root/$subfolder_name/.vscode/launch.json"
-
 # Find and replace [REPO-NAME] with the actual repository name
 find_and_replace "\[REPO-NAME\]" "$repo_name" "$repo_root/$subfolder_name/.vscode/launch.json"
 
 # Copy the settings.json file to the .vscode folder
 copy_template_if_not_exists "$repo_root/templates/settings.json" "$repo_root/$subfolder_name/.vscode/settings.json"
+# Find and replace [REPO-NAME] with the actual repository name
+find_and_replace "\[REPO-NAME\]" "$repo_name" "$repo_root/$subfolder_name/.vscode/settings.json"
 
 # Copy the tasks.json file to the .vscode folder
 copy_template_if_not_exists "$repo_root/templates/tasks.json" "$repo_root/$subfolder_name/.vscode/tasks.json"
