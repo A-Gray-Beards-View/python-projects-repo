@@ -145,13 +145,12 @@ class LoggingManager:
 
         return logger, api_failures_logger, query_failures_logger
 
-    @staticmethod
-    def log_exception_to_file(self, exception, function_name, app_nb, json_data=None, **params):
-        log_dir = os.path.join(self._log_dir, 'logs', 'query_failures')
+    def log_exception_to_file(self, exception, function_name, json_data, **params):
+        log_dir = os.path.join(self._log_dir, 'logs', 'exceptions')
         os.makedirs(log_dir, exist_ok=True)
 
         date_str = datetime.now().strftime("%Y-%m-%d")
-        filename = f"{date_str}_exception_{function_name}_{app_nb}.json"
+        filename = f"{date_str}_exception_{function_name}.json"
         file_path = os.path.join(log_dir, filename)
 
         # Validate json_data and handle invalid JSON
@@ -172,7 +171,6 @@ class LoggingManager:
         # Prepare the new exception details
         exception_details = {
             "function_name": function_name,
-            "app_nb": app_nb,
             "timestamp": datetime.now().isoformat(),
             "params": params,
             "exception": {
@@ -218,6 +216,10 @@ class LoggingManager:
             print(f"Failed to write exception to file: {e}")
 
 def main():
+    # Logs will the a subdirectory of the current directory called 'logs'
+    # The log file will be named 'test_script_default_<current_date>.log' in the 'logs/default' directory
+    # The log file will be named 'test_script_api_<current_date>.log' in the 'logs/api_failures' directory
+    # The log file will be named 'test_script_query_<current_date>.log' in the 'logs/query_failures' directory
     logging_manager = LoggingManager(log_dir='.')
 
     logger = logging_manager.setup_default_logging('test_script')
@@ -236,6 +238,22 @@ def main():
     logger.warning('This is a warning message')
     logger.error('This is an error message')
     logger.critical('This is a critical message')
+
+    api_logger = logging_manager.setup_api_failures_logging('test_script')
+
+    query_logger = logging_manager.setup_query_failures_logging('test_script')
+    query_logger.error('This is a query error message')
+    query_logger.critical('This is a query critical message')
+    query_logger.warning('This is a query warning message')
+
+    try:
+
+        print()
+        raise ValueError("This is a test exception")
+
+    except Exception as e:
+        logging_manager.log_exception_to_file(e, 'test_function', json_data='{"key": "value"}', param1='value1', param2='value2')
+        print(f"Exception logged to file: {e}")
 
 if __name__ == '__main__':
     main()
