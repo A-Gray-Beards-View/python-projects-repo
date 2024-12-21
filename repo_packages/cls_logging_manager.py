@@ -14,7 +14,7 @@ init(autoreset=True)
 
 class ColorFormatter(logging.Formatter):
     FORMAT = "  %(asctime)s - %(levelname)s - %(message)s"
-    
+
     FORMATS = {
         logging.DEBUG: Fore.BLUE + FORMAT + Style.RESET_ALL,
         logging.INFO: Style.BRIGHT + Fore.WHITE + FORMAT + Style.RESET_ALL,
@@ -54,7 +54,7 @@ class LoggingManager:
     def __init__(self, log_dir=None):
         if self._initialized:
             return
-        
+
         print(f"Initializing LoggingManager with log_dir: {log_dir}")
 
         self._log_dir = log_dir  # Store the log directory
@@ -144,7 +144,7 @@ class LoggingManager:
         query_failures_logger = self.setup_query_failures_logging(script_name)
 
         return logger, api_failures_logger, query_failures_logger
-    
+
     @staticmethod
     def log_exception_to_file(self, exception, function_name, app_nb, json_data=None, **params):
         log_dir = os.path.join(self._log_dir, 'logs', 'query_failures')
@@ -217,3 +217,25 @@ class LoggingManager:
         except Exception as e:
             print(f"Failed to write exception to file: {e}")
 
+def main():
+    logging_manager = LoggingManager(log_dir='.')
+
+    logger = logging_manager.setup_default_logging('test_script')
+
+    # Info will only to to the log file, not the console by default, unless the console level is set to INFO
+    logger.info('This is an info message')
+    logger.warning('This is a warning message')
+    logger.error('This is an error message')
+    logger.critical('This is a critical message')
+
+    print()
+
+    logger = logging_manager.setup_default_logging('test_script', level=logging.DEBUG, console_level=logging.INFO)
+    logger.debug('This is a debug message')
+    logger.info('This is an info message')
+    logger.warning('This is a warning message')
+    logger.error('This is an error message')
+    logger.critical('This is a critical message')
+
+if __name__ == '__main__':
+    main()
