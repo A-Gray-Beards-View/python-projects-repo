@@ -1,27 +1,35 @@
 {
-    "_commentDocumentation" : {
-        "_commentREADME": "The file README_Configuration.md has additional document for how the configuration process works.",
-        "_commentUsage": "Add your passwords then rename this file to app_keys.json"
+    "keys": {
+        "_comment": "These are the keys that are used in the application",
+        "APP_NAME": {
+            "KEY1": "",
+            "KEY2": ""
+        }
     },
     "pgConnStrs": {
-        "localdev": {
-            "database_one": {
-                "password": ""
-            },
-            "database_two": {
+        "_comment": "These are the passwords merged in app_keys.json",
+        "development":{
+            "postgres" : {
                 "password": ""
             }
         },
-        "localhost": {
-            "database_one": {
-                "password": ""
-            },
-            "database_two": {
+        "localhost":{
+            "postbres" : {
                 "password": ""
             }
         },
-        "production": {
-            "database_one": {
+        "qa":{
+            "postgres" : {
+                "password": ""
+            }
+        },
+        "production":{
+            "postgres" : {
+                "password": ""
+            }
+        },
+        "staging":{
+            "postgres" : {
                 "password": ""
             }
         }

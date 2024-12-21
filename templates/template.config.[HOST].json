@@ -7,14 +7,15 @@
             "Save this file as config.hostname.json using the hostname of the computer hosting this repository"
        ]
     },
-    "pgServers": {
-        "sourcePostgres": "",
-        "targetPostgresDev": "",
-        "targetPostgresProd": ""
-    },
-    "osDriveFolderRoots": {
-        "Mac": "/Volumes/",
-        "PC": "c:/",
-        "LINUX": "?"
+    {
+        "pgServers": {
+            "sourcePostgres": "production",
+            "targetPostgresDev": "localdev",
+            "targetPostgresProd": "production"
+        },
+        "GoogleBaseFolders": {
+            "BigQueryBase": "",
+            "BigQueryPatentsBase": ""
+        }
     }
 }
