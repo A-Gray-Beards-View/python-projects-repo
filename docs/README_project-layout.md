@@ -4,51 +4,89 @@ This Github repository has been setup with a Visual Studio Code workspace with a
 
 ## Repository Layout
 
-### Root Repository Starting Layout
+### Root Repository New Fork Layout
 
+```
 root_folder/
+│
 ├── .vscode/                          # Settings files for Visual Studio Code
-│   ├── launch.json
 │   ├── settings.json
 │   └── tasks.json
+│
 ├── .gitattributes
 ├── .gitignore
+│
+├── docs/                             # Additional documents about the project
+│   └── README_project-layout.md     # This file
+│
 ├── key_files/                        # Folder to hold application key files that are NOT checked into GitHub
-├── repo_packages/                    # Shared packages for the entire repository
-├── sql_scripts/                      # SQL scripts global to the entire repository
-├── tests/                            # Test scripts for the entire repository
+│
+├── repo_packages/
+│   ├── __init__.py
+│   ├── cls_env_config.py
+│   ├── cls_env_tools.py
+│   ├── cls_logging_manager.py
+│   ├── cls_string_helpers.py
+│   ├── cls_xml_helpers.py
+│   ├── postgres_helpers.py
+│   ├── setup.cfg
+│   └── setup.py
+│
+├── shell_scripts/                    # Shell scripts to manage the repository
+│   ├── add_subproject.sh
+│   ├── common.sh
+│   ├── setup_python_projects.sh
+│   ├── setup_root_project.sh
+│   └── Setup-Python-Projects.ps1
+│
 ├── templates/
-│   ├── template.app_keys.json        # Template for creating the app_keys.json file
-│   ├── template.code-workspace       # Template for creating the repository workspace file
-│   └── template.config.hostname.json # Template for creating the config.hostname.json file for each system using the repository
-├── tools/                            # Tools to be used by the entire repository
+│   ├── [REPO-NAME].code-workspace
+│   ├── config.[HOST-MAC].json
+│   ├── config.[HOST-PC].json
+│   ├── launch.json
+│   ├── settings.json
+│   ├── setup.cfg
+│   ├── setup.py
+│   ├── tasks.json
+│   ├── template.app_keys.json
+│   └── template.config.[HOST].json
+│
 ├── config.json                       # Configuration settings for the entire repository
 ├── LICENSE                           # License file for the repository
 ├── README.md
 ├── requirements.txt                  # Baseline Python dependencies for the root project
-├── setup_python_projects.sh          # Bash script to setup the workspace(s)
-├── Setup-Python-Projects.ps1         # Powershell Script to setup the workspace(s)
-└── template.code-workspace           # Visual Studio Code workspace file to be named to match the repository
+│
+├── GOOGLE-BIGQUERY
+└── GOOGLE-CLOUD-STORAGE
+```
 
 ### Files and folders added to the root repository after initialization
 
+```
 root_folder/
 ├── .venv/                            # Local Python environment for the root of the repository
-├── .vscode/
+├── .vscode/launch.json
 ├── .env # An environment file that has to be added manually (might add it to Git)
-├── config.[hostname].json            # The [hostname] should match the name of the computer
-├── app_keys.json                     # A keys file that must be manually added and cannot be in Git
-└── [repository].code-workspace       # The [respository] variable should match the repository name
+└── [REPO-NAME].code-workspace        # The [respository] variable should match the repository name
+ ```
 
 ### A fully working repository with the minimum files for a sub-project
 
-root_folder/
-├── 
-├── sub-project1/
-│   ├── .vscode/
-│   └── 
-│   
-└── 
+repository_root_folder/
+└── sub_project_root/
+    ├── .venv/
+    ├── .vscode/
+    │   ├── launch.json
+    │   ├── settings.json
+    │   └── tasks.json
+    │
+    ├── workspace_packages
+    │   ├── __init__.py
+    │   ├── setup.cfg
+    │   └── setup.py
+    │
+    ├── .env
+    └── requirements.txt
 
 To setup the new sub-project you simply create those files. The requirements.txt could be empty if there is no scripts yet in the shared folder. Then add a sub-project line in the setup_workspace scripts which is documented in them and run it! That will then prepare the sub-project for use. The .vscode can be a copy of the settings files in the root repository. Supposedly the settings are inherited but I've not experienced that.
 
