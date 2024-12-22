@@ -72,6 +72,7 @@ root_folder/
 
 ### A fully working repository with the minimum files for a sub-project
 
+```
 repository_root_folder/
 └── sub_project_root/
     ├── .venv/
@@ -87,8 +88,7 @@ repository_root_folder/
     │
     ├── .env
     └── requirements.txt
-
-To setup the new sub-project you simply create those files. The requirements.txt could be empty if there is no scripts yet in the shared folder. Then add a sub-project line in the setup_workspace scripts which is documented in them and run it! That will then prepare the sub-project for use. The .vscode can be a copy of the settings files in the root repository. Supposedly the settings are inherited but I've not experienced that.
+```
 
 Alt+179 │
 Alt+195 ├
