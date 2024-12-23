@@ -28,11 +28,13 @@ class EnvConfigSingleton:
 
         self._config = EnvTools.load_settings('config.json')
 
+        # Load local config file if it exists which should have settings specific to the local machine
         local_config_file = f'config.{hostname}.json'
         self._local_config = EnvTools.load_settings(local_config_file)
         if self._local_config is not None:
             self._merge_dicts(self._config, self._local_config)
 
+        # Load app keys which might be property values or a relative path to a key file
         self._app_keys = EnvTools.load_settings('app_keys.json')
         if self._app_keys is not None:
             self._merge_dicts(self._config, self._app_keys)

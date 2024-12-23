@@ -60,7 +60,7 @@ root_folder/
 └── GOOGLE-CLOUD-STORAGE
 ```
 
-### Files and folders added to the root repository after initialization
+### Files and folders added to the root repository after set up script initialization
 
 ```
 root_folder/
@@ -90,7 +90,11 @@ repository_root_folder/
     └── requirements.txt
 ```
 
+#### Symbols for copy/pasting
+
+```
 Alt+179 │
 Alt+195 ├
 Alt+192 └
 Alt+196 ─
+```
