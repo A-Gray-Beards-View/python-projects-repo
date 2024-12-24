@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Notes:
+# - This script sets up Python environments for multiple projects in a VS Code workspace.
+# - It uses the setup_python_environment function from the common.sh script to set up the Python environment for each project.
+# - It finds the .code-workspace file at the root of the repository and extracts the project folders from it.
+# - It iterates over each project folder and calls the setup_python_environment function to configure the Python environment.
+
 set -e  # Exit immediately if a command exits with a non-zero status
 
 # Determine the directory of the current script
@@ -11,7 +17,7 @@ script_dir="$(dirname "${BASH_SOURCE[0]}")"
 # Check if the script is already sourced
 if [ -z "${SCRIPT_INCLUDED+x}" ]; then
     # shellcheck disable=SC1091
-    source "$script_dir/shell_scripts/common.sh"
+    source "$script_dir/scripts_shell/common.sh"
     SCRIPT_INCLUDED=1
 fi
 

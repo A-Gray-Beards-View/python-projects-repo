@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# Notes:
+# - This script adds a subproject to the workspace and sets up the necessary folders and files.
+# - The script prompts for the subproject name (relative path) and then adds it to the workspace.
+# - It creates the subproject folder, .vscode folder, and standard configuration files.
+# - It also creates the workspace_packages folder and copies the setup.py and setup.cfg files.
+# - The script uses the common.sh script for shared functions and variables.
+
 set -e  # Exit immediately if a command exits with a non-zero status
 
 # Determine the directory of the current script
@@ -7,6 +14,7 @@ script_dir="$(dirname "${BASH_SOURCE[0]}")"
 
 repo_root=""
 repo_name=""
+repo_name_upper=""
 
 # Check if the script is already sourced
 if [ -z "${SCRIPT_INCLUDED+x}" ]; then
@@ -88,12 +96,12 @@ fi
 # Copy the launch.json file to the .vscode folder
 copy_template_if_not_exists "$repo_root/templates/launch.json" "$repo_root/$subfolder_name/.vscode/launch.json"
 # Find and replace [REPO-NAME] with the actual repository name
-find_and_replace "\[REPO-NAME\]" "$repo_name" "$repo_root/$subfolder_name/.vscode/launch.json"
+find_and_replace "\[REPO-NAME\]" "$repo_name_upper" "$repo_root/$subfolder_name/.vscode/launch.json"
 
 # Copy the settings.json file to the .vscode folder
 copy_template_if_not_exists "$repo_root/templates/settings.json" "$repo_root/$subfolder_name/.vscode/settings.json"
 # Find and replace [REPO-NAME] with the actual repository name
-find_and_replace "\[REPO-NAME\]" "$repo_name" "$repo_root/$subfolder_name/.vscode/settings.json"
+find_and_replace "\[REPO-NAME\]" "$repo_name_upper" "$repo_root/$subfolder_name/.vscode/settings.json"
 
 # Copy the tasks.json file to the .vscode folder
 copy_template_if_not_exists "$repo_root/templates/tasks.json" "$repo_root/$subfolder_name/.vscode/tasks.json"
