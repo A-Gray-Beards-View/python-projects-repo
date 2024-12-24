@@ -8,7 +8,7 @@
             "program": "${file}",
             "console": "integratedTerminal",
             "env": {
-                "REPO_ROOT": "${workspaceFolder:python-projects-repo}",
+                "REPO_ROOT": "${workspaceFolder:[REPO-NAME]}",
                 "WORKSPACE_ROOT": "${workspaceFolder}"
             }
         }
