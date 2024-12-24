@@ -2,6 +2,7 @@
 .vscode/*
 
 # These files are specific to each project and should be included in the repository
+!.vscode/python.json.code-snippets
 !.vscode/settings.json
 !.vscode/extensions.json
 !.vscode/launch.json
