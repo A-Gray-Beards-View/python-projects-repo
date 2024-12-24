@@ -15,15 +15,15 @@
                 "Setting up Python Subproject..."
             ],
             "windows": {
-                "command": ".\\shell_scripts\\Add-Sub-Project.ps1",
+                "command": ".\\scripts_shell\\Add-Sub-Project.ps1",
                 "type": "shell"
             },
             "linux": {
-                "command": "./shell_scripts/add_sub_project.sh",
+                "command": "./scripts_shell/add_sub_project.sh",
                 "type": "shell"
             },
             "osx": {
-                "command": "./shell_scripts/add_sub_project.sh",
+                "command": "./scripts_shell/add_sub_project.sh",
                 "type": "shell"
             },
             "problemMatcher": [],
@@ -46,11 +46,11 @@
                 "type": "shell"
             },
             "linux": {
-                "command": "./shell_scripts/setup_python_projects.sh",
+                "command": "./scripts_shell/setup_python_projects.sh",
                 "type": "shell"
             },
             "osx": {
-                "command": "./shell_scripts/setup_python_projects.sh",
+                "command": "./scripts_shell/setup_python_projects.sh",
                 "type": "shell"
             },
             "problemMatcher": [],
