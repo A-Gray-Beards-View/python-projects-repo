@@ -10,18 +10,20 @@ This Github repository has been setup with a Visual Studio Code workspace with a
 root_folder/
 │
 ├── .vscode/                          # Settings files for Visual Studio Code
-│   ├── settings.json
-│   └── tasks.json
+│   ├── python.json.code-snippets     # Demonstration of Python code snippers with one entry
+│   ├── settings.json                 # Default settings.json used by the root, not the sub-projects
+│   └── tasks.json                    # Default tasks.json used by the root, not the sub-projects
 │
 ├── .gitattributes
 ├── .gitignore
 │
-├── docs/                             # Additional documents about the project
-│   └── README_project-layout.md     # This file
+├── docs_md/                          # Additional documents about the project linked from the ./README.md file
+│   ├── README_naming-conventions.md  # Naming conventions used in the project
+│   └── README_project-layout.md      # This file
 │
 ├── key_files/                        # Folder to hold application key files that are NOT checked into GitHub
 │
-├── repo_packages/
+├── repo_packages/                    # Editable package to hold modules used by the root project and sub-projects
 │   ├── __init__.py
 │   ├── cls_env_config.py
 │   ├── cls_env_tools.py
@@ -32,32 +34,38 @@ root_folder/
 │   ├── setup.cfg
 │   └── setup.py
 │
-├── shell_scripts/                    # Shell scripts to manage the repository
-│   ├── add_subproject.sh
-│   ├── common.sh
-│   ├── setup_python_projects.sh
-│   ├── setup_root_project.sh
+├── scripts_powershell/               # Powershell scripts to manage the repository
+│   ├──
+│   ├──
+│   ├──
+│   ├──
 │   └── Setup-Python-Projects.ps1
 │
+├── scripts_shell/                    # Shell scripts to manage the repository
+│   ├── add_subproject.sh             # Script to create sub-projects triggered by 'Run Tasks' as a command
+│   ├── common.sh                     # Used by other scripts in this folder
+│   ├── setup_python_projects.sh      # Triggered by Run Task to initialize the root and sub-projects after cloning the repository
+│   └── setup_root_project.sh         # Run on the command line after forking the repository
+│
 ├── templates/
-│   ├── [REPO-NAME].code-workspace
-│   ├── config.[HOST-MAC].json
-│   ├── config.[HOST-PC].json
-│   ├── launch.json
-│   ├── settings.json
+│   ├── [REPO-NAME].code-workspace    # Template code-workspace used by Setup Root Project script
+│   ├── config.[HOST-MAC].json        # Template script to be used manually
+│   ├── config.[HOST-PC].json         # Template script to be used manually
+│   ├── launch.json                   # Template script copied/modified by Setup Root Project script
+│   ├── settings.json                 # Template script copied/modified for Add Sub-Project script
 │   ├── setup.cfg
 │   ├── setup.py
-│   ├── tasks.json
-│   ├── template.app_keys.json
-│   └── template.config.[HOST].json
+│   ├── tasks.json                    # Template script copied/modified for Add Sub-Project script
+│   ├── template.app_keys.json        # Example app_keys.json file
+│   └── template.config.[HOST].json   # Example config.HOST.json file
 │
 ├── config.json                       # Configuration settings for the entire repository
 ├── LICENSE                           # License file for the repository
 ├── README.md
 ├── requirements.txt                  # Baseline Python dependencies for the root project
 │
-├── GOOGLE-BIGQUERY
-└── GOOGLE-CLOUD-STORAGE
+├── GOOGLE-BIGQUERY                   # Example project for using Google BigQuery
+└── GOOGLE-CLOUD-STORAGE              # Example project for using Google Cloud Storage
 ```
 
 ### Files and folders added to the root repository after set up script initialization
