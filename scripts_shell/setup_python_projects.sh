@@ -2,9 +2,9 @@
 
 # Notes:
 # - This script sets up Python environments for multiple projects in a VS Code workspace.
-# - It uses the setup_python_environment function from the common.sh script to set up the Python environment for each project.
+# - It uses the initialize_python_environment function from the common.sh script to set up the Python environment for each project.
 # - It finds the .code-workspace file at the root of the repository and extracts the project folders from it.
-# - It iterates over each project folder and calls the setup_python_environment function to configure the Python environment.
+# - It iterates over each project folder and calls the initialize_python_environment function to configure the Python environment.
 
 set -e  # Exit immediately if a command exits with a non-zero status
 
@@ -32,7 +32,7 @@ if [ -z "$workspace_file" ]; then
 fi
 
 # Set up the root project first
-setup_python_environment "." "true"
+initialize_python_environment "." "true"
 
 # Get the list of project folders
 project_folders=$(jq -r '.folders[].path' "$workspace_file")
@@ -40,7 +40,7 @@ project_folders=$(jq -r '.folders[].path' "$workspace_file")
 # Iterate over each project folder (excluding the root project) and set up the environment
 for folder in $project_folders; do
     if [ "$folder" != "." ]; then
-        setup_python_environment "$folder" "false"
+        initialize_python_environment "$folder" "false"
     fi
 done
 

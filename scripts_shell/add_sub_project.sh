@@ -117,4 +117,4 @@ copy_template_if_not_exists "$repo_root/templates/setup.py" "$repo_root/$subfold
 # Copy the setup.cfg file to the workspace_packages folder
 copy_template_if_not_exists "$repo_root/templates/setup.cfg" "$repo_root/$subfolder_name/workspace_packages/setup.cfg"
 
-setup_python_environment "$repo_root/$subfolder_name" "false"
+initialize_python_environment "$repo_root/$subfolder_name" "false"

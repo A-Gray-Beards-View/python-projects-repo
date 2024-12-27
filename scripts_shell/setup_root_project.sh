@@ -2,9 +2,9 @@
 
 # Notes:
 # - This script sets up Python environments for multiple projects in a VS Code workspace.
-# - It uses the setup_python_environment function from the common.sh script to set up the Python environment for each project.
+# - It uses the initialize_python_environment function from the common.sh script to set up the Python environment for each project.
 # - It finds the .code-workspace file at the root of the repository and extracts the project folders from it.
-# - It iterates over each project folder and calls the setup_python_environment function to configure the Python environment.
+# - It iterates over each project folder and calls the initialize_python_environment function to configure the Python environment.
 
 set -e  # Exit immediately if a command exits with a non-zero status
 
@@ -45,8 +45,8 @@ create_root_project_workspace() {
 
 create_root_project_workspace "$repo_root" "$repo_name" "$repo_name_upper"
 
-setup_python_environment "$repo_root" "true"
+initialize_python_environment "$repo_root" "true"
 
-setup_python_environment "$repo_root/google-bigquery" "false"
+initialize_python_environment "$repo_root/google-bigquery" "false"
 
-setup_python_environment "$repo_root/google-cloud-storage" "false"
+initialize_python_environment "$repo_root/google-cloud-storage" "false"

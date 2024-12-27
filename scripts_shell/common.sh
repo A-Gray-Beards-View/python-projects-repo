@@ -37,7 +37,7 @@ find_and_replace() {
 }
 
 # Function to create a virtual environment
-create_venv() {
+new_venv() {
     local venv_path=$1
 
     # Check if the virtual environment already exists
@@ -52,7 +52,7 @@ create_venv() {
 }
 
 # Function to set up the Python environment for each project
-setup_python_environment() {
+initialize_python_environment() {
     local project_path="$1"
     local is_root="$2"
 
@@ -67,7 +67,7 @@ setup_python_environment() {
     # Check if a virtual environment already exists in .venv
     local venv_path="$project_path/.venv"
 
-    create_venv "$venv_path"
+    new_venv "$venv_path"
 
     # Activate the virtual environment
     # shellcheck disable=SC1091
