@@ -51,6 +51,28 @@ new_venv() {
     python3 -m venv "$venv_path"
 }
 
+copy_host_file() {
+    local host_file=""
+    local target_path="$repo_root/host_config.json"
+
+    if [ "$(uname)" == "Darwin" ]; then
+        host_file="$repo_root/templates/config.[HOST-MAC].json"
+    elif [ "$(uname)" == "MINGW64_NT-10.0" ]; then
+        host_file="$repo_root/templates/config.[HOST-PC].json"
+    else
+        echo "Unsupported OS"
+        return
+    fi
+
+    if [ ! -f "$target_path" ]; then
+        cp "$host_file" "$target_path"
+        local host_name=$(hostname)
+        sed -i '' "s/\[HOST\]/$host_name/g" "$target_path"
+    else
+        echo "Host file already exists at $target_path"
+    fi
+}
+
 # Function to set up the Python environment for each project
 initialize_python_environment() {
     local project_path="$1"
@@ -85,6 +107,7 @@ initialize_python_environment() {
         echo "Registering repo_packages in the root project..."
         pip install -e "$project_path/repo_packages"
         pythonpath="$project_path/repo_packages"
+        copy_host_file
     else
         echo "Registering repo_packages and workspace_packages in subproject..."
         repo_path=$(cd "$project_path/../repo_packages" && pwd)
