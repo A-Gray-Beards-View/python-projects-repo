@@ -1,72 +1,17 @@
+# Description: This script sets up the Python environment for all projects in a multi-project repository.
+#
+# Notes:
+# - This script sets up Python environments for multiple projects in a VS Code workspace.
+# - It uses the Initialize-PythonEnvironment function from the Common.ps1 script to set up the Python environment for each project.
+# - It finds the .code-workspace file at the root of the repository and extracts the project folders from it.
+# - It iterates over each project folder and calls the Initialize-PythonEnvironment function to configure the Python environment.
+
 # Exit immediately if a command exits with a non-zero status
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
-# Function to set up the Python environment for each project
-function Initialize-PythonEnvironment {
-    param (
-        [string]$projectPath,
-        [bool]$isRoot
-    )
-
-    Write-Host "Configuring Python environment for project at $projectPath..."
-
-    # Convert project_path to an absolute path
-    $projectPath = Resolve-Path -Path $projectPath
-
-    # Check if a virtual environment already exists in .venv
-    $venvPath = Join-Path $projectPath ".venv"
-    if (-Not (Test-Path -Path $venvPath)) {
-        Write-Host "Creating a virtual environment at $venvPath..."
-        python -m venv $venvPath
-    } else {
-        Write-Host "Virtual environment already exists at $venvPath"
-    }
-
-    # Activate the virtual environment
-    $venvActivate = Join-Path $venvPath "Scripts\Activate.ps1"
-    & $venvActivate
-
-    # Upgrade pip
-    Write-Host "Upgrading pip..."
-    python -m pip install --upgrade pip
-
-    # Initialize PYTHONPATH
-    $pythonpath = ""
-
-    # Register editable packages
-    if ($isRoot) {
-        Write-Host "Registering repo_packages in the root project..."
-        pip install -e "$projectPath\repo_packages"
-        $pythonpath = "$projectPath\repo_packages"
-    } else {
-        Write-Host "Registering repo_packages and workspace_packages in subproject..."
-        $repoPath = Resolve-Path -Path "$projectPath\..\repo_packages"
-        $workspacePath = Resolve-Path -Path "$projectPath\workspace_packages"
-        pip install -e $repoPath
-        pip install -e $workspacePath
-        $pythonpath = "$repoPath;$workspacePath"
-    }
-
-    # Create or overwrite the .env file with the absolute PYTHONPATH
-    Write-Host "Creating .env file with fully qualified PYTHONPATH..."
-    Set-Content -Path "$projectPath\.env" -Value "PYTHONPATH=$pythonpath"
-
-    # Check if requirements.txt exists
-    $requirementsPath = Join-Path $projectPath "requirements.txt"
-    if (Test-Path -Path $requirementsPath) {
-        Write-Host "Installing dependencies from $requirementsPath..."
-        pip install -r $requirementsPath
-    } else {
-        Write-Host "No requirements.txt found. Creating one..."
-        pip freeze | Out-File -FilePath $requirementsPath
-        Write-Host "requirements.txt created at $requirementsPath"
-    }
-
-    # Deactivate the virtual environment
-    Write-Host "Deactivating virtual environment..."
-    deactivate
-}
+# Load the common functions
+. "$PSScriptRoot/Common.ps1"
 
 # Main script execution
 
