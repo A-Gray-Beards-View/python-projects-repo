@@ -20,5 +20,5 @@ requests==2.32.3
 rsa==4.9
 soupsieve==2.6
 urllib3==2.2.3
--e repo-packages
--e workspace-packages
+-e ../repo_packages
+-e ./workspace_packages

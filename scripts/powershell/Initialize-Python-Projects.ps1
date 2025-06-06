@@ -10,13 +10,16 @@
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
-# Load the common functions
-. "$PSScriptRoot/Common.ps1"
+# Determine the directory of the current script
+$scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+
+# Load the common functions, check if the script is already sourced
+if ((-not (Get-Variable -Name COMMON_INCLUDED -Scope Global -ErrorAction SilentlyContinue)) -or (-not $global:COMMON_INCLUDED)) {
+    . "$scriptDir/Common.ps1"
+    $global:COMMON_INCLUDED = $true
+}
 
 # Main script execution
-
-# Find the .code-workspace file
-$workspaceFile = Get-ChildItem -Filter "*.code-workspace" | Select-Object -First 1
 
 if (-Not $workspaceFile) {
     Write-Host "No *.code-workspace file found at the root of the repository."
@@ -24,7 +27,7 @@ if (-Not $workspaceFile) {
 }
 
 # Set up the root project first
-Setup-PythonEnvironment -projectPath "." -isRoot $true
+Initialize-PythonEnvironment -projectPath "." -isRoot $true
 
 # Get the list of project folders
 $projectFolders = (Get-Content $workspaceFile.FullName | ConvertFrom-Json).folders.path

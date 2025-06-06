@@ -1,6 +1,23 @@
 {
     "python.analysis.autoImportCompletions": true,
     "python.analysis.extraPaths": [
-        "${workspaceFolder}/repo_packages"
-    ]
+        "${workspaceFolder:PYTHON-PROJECTS-REPO}/repo_packages"
+    ],
+    "terminal.integrated.profiles.windows": {
+        "Windows PowerShell": {
+            "path": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+            "args": [
+                "-NoExit",
+                "-Command",
+                "& { . \"${workspaceFolder}/.venv/Scripts/Activate.ps1\" }"
+            ]
+        }            
+    },
+    "python.envFile": "${workspaceFolder:PYTHON-PROJECTS-REPO}/.env",
+    "python.terminal.activateEnvironment": true,
+    "python.terminal.activateEnvInCurrentTerminal": true,
+    "python.terminal.executeInFileDir": true,
+    "python.terminal.focusAfterLaunch": true,
+    "python.terminal.launchArgs": [],
+    "python.defaultInterpreterPath": "${workspaceFolder:PYTHON-PROJECTS-REPO}\\.venv\\Scripts\\python.exe"
 }

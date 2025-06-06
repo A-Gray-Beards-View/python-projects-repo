@@ -28,7 +28,7 @@ This file contains manually generated ToDo tasks as well as ones automatically e
 - Create UX for tournament awards
 - Create players dashboard
 
-## TODOs from Python Files
+## TODOs from Source Files
 - Placeholder for TODOs
 
 ## Completed

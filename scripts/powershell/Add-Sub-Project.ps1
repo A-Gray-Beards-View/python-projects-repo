@@ -8,26 +8,24 @@
 # - The script uses the Common.ps1 script for shared functions and variables.
 
 param (
-    [string]$subfolderName
+    [string]$subProjectName
 )
 
 # Determine the directory of the current script
 $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 
-# Check if the script is already sourced
-if (-Not $global:SCRIPT_INCLUDED) {
+# Load the common functions, check if the script is already sourced
+if ((-not (Get-Variable -Name COMMON_INCLUDED -Scope Global -ErrorAction SilentlyContinue)) -or (-not $global:COMMON_INCLUDED)) {
     . "$scriptDir/Common.ps1"
-    $global:SCRIPT_INCLUDED = $true
+    $global:COMMON_INCLUDED = $true
 }
 
 function Add-FolderToWorkspace {
     param (
         [string]$workspaceFile,
-        [string]$subprojectName
+        [string]$subProjectName,
+        [string]$subProjectPath
     )
-
-    $subprojectNameUpper = $subprojectName.ToUpper()
-    $subprojectPath = $subprojectName.ToLower()
 
     if (-Not (Test-Path -Path $workspaceFile)) {
         Write-Output "Workspace file '$workspaceFile' not found."
@@ -36,58 +34,75 @@ function Add-FolderToWorkspace {
 
     $workspaceData = Get-Content -Path $workspaceFile -Raw | ConvertFrom-Json
 
-    if ($workspaceData.folders | Where-Object { $_.path -eq $subprojectPath }) {
-        Write-Output "Folder '$subprojectPath' is already in the workspace."
+    if ($workspaceData.folders | Where-Object { $_.path -eq $subProjectPath }) {
+        Write-Output "Folder '$subProjectPath' is already in the workspace."
     } else {
-        $workspaceData.folders += [PSCustomObject]@{ name = $subprojectNameUpper; path = $subprojectPath }
+        $workspaceData.folders += [PSCustomObject]@{ name = $subProjectName; path = $subProjectPath }
         $workspaceData | ConvertTo-Json -Depth 10 | Set-Content -Path $workspaceFile
     }
 
-    if (-Not (Test-Path -Path $subprojectPath)) {
-        New-Item -ItemType Directory -Path $subprojectPath | Out-Null
+    if (-Not (Test-Path -Path "$repoRoot/$subProjectPath")) {
+        New-Item -ItemType Directory -Path "$repoRoot/$subProjectPath" | Out-Null
     }
 
-    if (-Not (Test-Path -Path "$subprojectPath/.vscode")) {
-        New-Item -ItemType Directory -Path "$subprojectPath/.vscode" | Out-Null
+    if (-Not (Test-Path -Path "$repoRoot/$subProjectPath/.vscode")) {
+        New-Item -ItemType Directory -Path "$repoRoot/$subProjectPath/.vscode" | Out-Null
     }
 
-    Write-Output "Subproject '$subprojectNameUpper' with path '$subprojectPath' added to the workspace."
+    Write-Output "Subproject '$subProjectName' with path '$subProjectPath' added to the workspace."
 }
 
-if (-Not $subfolderName) {
-    $subfolderName = Read-Host "Enter the subproject name (relative path)"
+if (-Not $subProjectName) {
+    $subProjectName = Read-Host "Enter the Sub-Project name (relative path)"
 }
-
-$workspaceFile = Get-ChildItem -Path . -Filter "*.code-workspace" -Depth 0 | Select-Object -First 1
 
 if (-Not $workspaceFile) {
     Write-Output "No *.code-workspace file found at the root of the repository."
     exit 1
 }
 
-Add-FolderToWorkspace -workspaceFile $workspaceFile.FullName -subprojectName $subfolderName
+$subProjectName = $subProjectName.ToUpper()
+$subProjectPath = $subProjectName.ToLower()
 
-if (-Not (Test-Path -Path "$repo_root/$subfolderName")) {
-    New-Item -ItemType Directory -Path "$repo_root/$subfolderName" | Out-Null
+Add-FolderToWorkspace -workspaceFile $workspaceFile.FullName -subProjectName $subProjectName -subProjectPath $subProjectPath
+
+if (-Not (Test-Path -Path "$repoRoot/$subProjectPath")) {
+    New-Item -ItemType Directory -Path "$repoRoot/$subProjectPath" | Out-Null
 }
 
-if (-Not (Test-Path -Path "$repo_root/$subfolderName/.vscode")) {
-    New-Item -ItemType Directory -Path "$repo_root/$subfolderName/.vscode" | Out-Null
+if (-Not (Test-Path -Path "$repoRoot/$subProjectPath/.vscode")) {
+    New-Item -ItemType Directory -Path "$repoRoot/$subProjectPath/.vscode" | Out-Null
 }
 
-Copy-TemplateIfNotExists -templatePath "$repo_root/templates/launch.json" -targetPath "$repo_root/$subfolderName/.vscode/launch.json"
-Find-AndReplace -searchString "\[REPO-NAME\]" -replaceString $repo_name_upper -filePath "$repo_root/$subfolderName/.vscode/launch.json"
+function Update-VSCodeConfig {
+    param (
+        [string]$repoRoot,
+        [string]$subProjectPath,
+        [string]$repoName,
+        [string]$subProjectName
+    )
 
-Copy-TemplateIfNotExists -templatePath "$repo_root/templates/settings.json" -targetPath "$repo_root/$subfolderName/.vscode/settings.json"
-Find-AndReplace -searchString "\[REPO-NAME\]" -replaceString $repo_name_upper -filePath "$repo_root/$subfolderName/.vscode/settings.json"
+    $vscodePath = "$repoRoot/$subProjectPath/.vscode"
+    $templates = @{
+        'launch.json'   = @{path = "$repoRoot/templates/launch.json"; target = "$vscodePath/launch.json"}
+        'settings.json' = @{path = "$repoRoot/templates/settings.json"; target = "$vscodePath/settings.json"}
+        'tasks.json'    = @{path = "$repoRoot/templates/tasks.json"; target = "$vscodePath/tasks.json"}
+    }
 
-Copy-TemplateIfNotExists -templatePath "$repo_root/templates/tasks.json" -targetPath "$repo_root/$subfolderName/.vscode/tasks.json"
-
-if (-Not (Test-Path -Path "$repo_root/$subfolderName/workspace_packages")) {
-    New-Item -ItemType Directory -Path "$repo_root/$subfolderName/workspace_packages" | Out-Null
+    foreach ($template in $templates.GetEnumerator()) {
+        Copy-TemplateIfNotExists -templatePath $template.Value.path -targetPath $template.Value.target
+        Find-AndReplace -searchString "%REPO-NAME%" -replaceString $repoName -filePath $template.Value.target
+        Find-AndReplace -searchString "%PROJECT-NAME%" -replaceString $subProjectName -filePath $template.Value.target
+    }
 }
 
-Copy-TemplateIfNotExists -templatePath "$repo_root/templates/setup.py" -targetPath "$repo_root/$subfolderName/workspace_packages/setup.py"
-Copy-TemplateIfNotExists -templatePath "$repo_root/templates/setup.cfg" -targetPath "$repo_root/$subfolderName/workspace_packages/setup.cfg"
+Update-VSCodeConfig -repoRoot $repoRoot -subProjectPath $subProjectPath -repoName $repoName -subProjectName $subProjectName
 
-Initialize-PythonEnvironment -projectPath "$repo_root/$subfolderName" -isRoot $false
+if (-Not (Test-Path -Path "$repoRoot/$subProjectPath/workspace_packages")) {
+    New-Item -ItemType Directory -Path "$repoRoot/$subProjectPath/workspace_packages" | Out-Null
+}
+
+Copy-TemplateIfNotExists -templatePath "$repoRoot/templates/setup.py" -targetPath "$repoRoot/$subProjectPath/workspace_packages/setup.py"
+Copy-TemplateIfNotExists -templatePath "$repoRoot/templates/setup.cfg" -targetPath "$repoRoot/$subProjectPath/workspace_packages/setup.cfg"
+
+Initialize-PythonEnvironment -projectPath "$repoRoot/$subProjectPath" -isRoot $false

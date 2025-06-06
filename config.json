@@ -17,10 +17,14 @@
             "keyfile_path": "key_files/fourth-scheme-426219-t4-a00a36d11003.json"
         }
     },
-    "pgServers": {
-        "source": "development",
-        "target": "development"
+    "Constants": {
+        "_comment": "The constants are used in the code and are not expected to change",
+        "PatentModels": {
+            "_comment": "Appended to PatentModels in BaseFolders",
+            "Prototype": "USPTO_TC2100_TC2400"
+        }
     },
+    "pgServers": {},
     "pgConnStrs": {
         "_comment": "The passwords will be merged from app_keys.json",
         "_comment_dbname": "For psycopg2, the 'dbname' propery is the database name which is a PostgreSQL standard",

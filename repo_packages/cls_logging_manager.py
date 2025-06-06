@@ -39,7 +39,7 @@ class DelayedFileHandler(logging.FileHandler):
             self.stream = self._open()
         super().emit(record)
 
-class LoggingManager:
+class LoggingManagerSingleton:
     _instance = None
     _lock = threading.Lock()  # For thread safety
     _logger = None
@@ -47,7 +47,7 @@ class LoggingManager:
     def __new__(cls, log_dir=None, *args, **kwargs):
         with cls._lock:
             if not cls._instance:
-                cls._instance = super(LoggingManager, cls).__new__(cls, *args, **kwargs)
+                cls._instance = super(LoggingManagerSingleton, cls).__new__(cls, *args, **kwargs)
                 cls._instance._initialized = False
             return cls._instance
 
@@ -64,6 +64,9 @@ class LoggingManager:
         # Register the cleanup function to be called at program exit
         atexit.register(self._close_loggers)
 
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.close()
+
     def _close_loggers(self):
         # Close all handlers for every logger in the system
         for logger_name, logger in logging.Logger.manager.loggerDict.items():
@@ -72,6 +75,9 @@ class LoggingManager:
                 for handler in handlers:
                     handler.close()
                     logger.removeHandler(handler)
+
+    def close(self):
+        self._close_loggers()
 
     @property
     def logger(self):
@@ -121,6 +127,7 @@ class LoggingManager:
 
         return api_failures_logger
 
+
     def setup_query_failures_logging(self, script_name, level=logging.WARNING):
         log_dir = os.path.join(self._log_dir, 'logs', 'query_failures')
         os.makedirs(log_dir, exist_ok=True)
@@ -137,6 +144,7 @@ class LoggingManager:
 
         return query_failures_logger
 
+
     def setup_all_logging(self, script_name, level=logging.INFO, console_level=logging.WARNING):
 
         logger = self.setup_default_logging(script_name, level, console_level)
@@ -144,6 +152,7 @@ class LoggingManager:
         query_failures_logger = self.setup_query_failures_logging(script_name)
 
         return logger, api_failures_logger, query_failures_logger
+
 
     def log_exception_to_file(self, exception, function_name, json_data, **params):
         log_dir = os.path.join(self._log_dir, 'logs', 'exceptions')
@@ -215,12 +224,13 @@ class LoggingManager:
         except Exception as e:
             print(f"Failed to write exception to file: {e}")
 
+
 def main():
     # Logs will the a subdirectory of the current directory called 'logs'
     # The log file will be named 'test_script_default_<current_date>.log' in the 'logs/default' directory
     # The log file will be named 'test_script_api_<current_date>.log' in the 'logs/api_failures' directory
     # The log file will be named 'test_script_query_<current_date>.log' in the 'logs/query_failures' directory
-    logging_manager = LoggingManager(log_dir='.')
+    logging_manager = LoggingManagerSingleton(log_dir='.')
 
     logger = logging_manager.setup_default_logging('test_script')
 
