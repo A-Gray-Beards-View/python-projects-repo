@@ -1,3 +1,5 @@
+.DS_Store
+
 # Ignore other files in this folder
 .vscode/*
 
@@ -11,15 +13,20 @@
 # Information that is not safe in the repository
 app_keys.json
 keys.json
-passwords.json
 key_files/*
+passwords.json
+
+**/samples/[0-9]*/
+**/example.db
 
 # Subfolders that could be created in different sub-projects and subfolders that should be excluded
 **/dumps/
 **/logs/
 **/tmp/
+**/temp/
 
-## Default Python Entries from GitHub Desktop
+# Create by the Mac on some folders
+.DS_Store
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

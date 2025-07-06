@@ -4,11 +4,27 @@
         "_commentNamingConvention": "Names using snake_case match object names in the code or Postgres.",
         "_commentREADME": "The file README_Configuration.md has additional document for how the configuration process works."
     },
-    "pgServers": {
-        "_comment": "The source and target are the same for development. These values can be overridden by settings in the config.[HOSTNAME].json files.",
-        "source": "development",
-        "target": "development"
+    "GoogleCloudCredentials": {
+        "_comment": "The property holding the project ID and keyfile_path is the friendly project name",
+        "GoogleCloudStorage" : {
+            "project_id": "fourth-scheme-426219-t4",
+            "_comment": "The keyfile_path is a subfolder off the root of the repo and the file is not in the Git repo",
+            "keyfile_path": "key_files/fourth-scheme-426219-t4-237dcc275551.json"
+        },
+        "GoogleBigQuery" : {
+            "project_id": "fourth-scheme-426219-t4",
+            "_comment": "The keyfile_path is a subfolder off the root of the repo and the file is not in the Git repo",
+            "keyfile_path": "key_files/fourth-scheme-426219-t4-a00a36d11003.json"
+        }
     },
+    "Constants": {
+        "_comment": "The constants are used in the code and are not expected to change",
+        "PatentModels": {
+            "_comment": "Appended to PatentModels in BaseFolders",
+            "Prototype": "USPTO_TC2100_TC2400"
+        }
+    },
+    "pgServers": {},
     "pgConnStrs": {
         "_comment": "The passwords will be merged from app_keys.json",
         "_comment_dbname": "For psycopg2, the 'dbname' propery is the database name which is a PostgreSQL standard",
